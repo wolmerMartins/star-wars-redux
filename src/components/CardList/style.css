@@ -1,0 +1,15 @@
+.card-list-container {
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+    padding-left: .312rem;
+    border-left: 2px solid #DDD;
+}
+
+.card-list-container h2 {
+    font-size: .702rem;
+    margin-bottom: .312rem;
+}
+
+.card-list-container ul li {
+    font-size: .624rem;
+}

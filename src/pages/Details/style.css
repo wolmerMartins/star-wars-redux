@@ -1,0 +1,75 @@
+.card-details-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.card-details-container .card-image {
+    width: 7rem;
+    height: 8rem;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-left: .312rem;
+}
+
+.card-details-container .card-image img {
+    width: 7rem;
+    height: 8rem;
+}
+
+.card-details-container .card-image-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-details-container .card-image-button .go-back-button {
+    border: 1px solid #FFF;
+    background: none;
+    width: 3.5rem;
+    height: 1rem;
+    color: #FFF;
+    font-size: .555rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+.card-details-container .card-image-button .go-back-button:hover {
+    background: #FFF;
+    color: #000;
+}
+
+.card-details-container .card-infos {
+    flex-grow: 1;
+}
+
+.card-details-container .card-infos .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: .6rem;
+    border-bottom: 2px solid #FFF;
+}
+
+.card-details-container .card-infos .card-header .card-name-location h2 {
+    font-size: .889rem;
+}
+
+.card-details-container .card-infos .card-header .card-name-location h3 {
+    font-size: .702rem;
+}
+
+.card-details-container .card-infos .card-header .card-additional {
+    font-size: .555rem;
+    text-align: right;
+}
+
+.card-details-container .card-infos .card-body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: .6rem;
+}
