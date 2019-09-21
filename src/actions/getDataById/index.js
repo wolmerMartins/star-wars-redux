@@ -5,8 +5,10 @@ export const getDataByIdStarted = () => ({
     type: actionTypes.GET_DATA_BY_ID_STARTED
 });
 
-export const getDataByIdSucceed = data => ({
+export const getDataByIdSucceed = (data, filter) => ({
     type: actionTypes.GET_DATA_BY_ID_SUCCEED,
+    id: data.url,
+    filter,
     data
 });
 
@@ -20,7 +22,8 @@ const addDataToCard = (cardAdd, card) => {
         if (attr === 'homeworld') card.homeworld = cardAdd.find(res => (/planets/).test(res.url));
         if (Array.isArray(card[attr])) card[attr] = cardAdd.filter(res => ~res.url.indexOf(attr));
     }
-    console.log('addDataToCard', card);
+
+    return card;
 }
 
 const fetchDataByUrl = card => {
@@ -55,7 +58,9 @@ export const getAdditionalDataToCard = cardId => (
         
         try {
             const cardAdd = await fetchDataByUrl(card);
-            addDataToCard(cardAdd, card);
+            const cardAdded = addDataToCard(cardAdd, card);
+
+            dispatch(getDataByIdSucceed(cardAdded, filteredBy));
         } catch(err) {
             console.log('getDataByIdFailed', err);
         }
