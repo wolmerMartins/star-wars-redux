@@ -28,12 +28,6 @@ class Home extends Component {
                     </div>
             }
 
-            {/*!isLoading &&
-                <div className="cards">
-                    <Cards data={response[filtered]} getDataById={context.getDataById} />
-                </div>
-            */}
-
             {/*!context.isLoading &&
                 context.data.count > 10 &&
                 <Paginator />

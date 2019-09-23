@@ -23,6 +23,7 @@ const getDataByIdReducer = (state = initialState, action) => {
                     }
                 },
                 selectedCardId: action.id,
+                filter: action.filter,
                 isSelectedCard: true,
                 isLoading: false
             }

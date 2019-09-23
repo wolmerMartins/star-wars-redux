@@ -5,7 +5,8 @@ import Home from './Home';
 
 const mapStateToProps = state => ({
     state: state.getDataByPageReducer,
-    isLoading: state.getDataByPageReducer.isLoading,
+    isLoading: state.getDataByPageReducer.isLoading
+        || state.getDataByIdReducer.isLoading,
     actualPage: state.getDataByPageReducer.actualPage,
     filteredBy: state.getDataByPageReducer.filteredBy,
     response: state.getDataByPageReducer.dataByFilter

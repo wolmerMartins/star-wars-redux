@@ -45,7 +45,7 @@ const fetchDataByUrl = card => {
     ).then(resolve => cardRef);
 }
 
-export const getAdditionalDataToCard = cardId => (
+const getAdditionalDataToCard = cardId => (
     async (dispatch, getState) => {
         dispatch(getDataByIdStarted());
 
@@ -64,5 +64,13 @@ export const getAdditionalDataToCard = cardId => (
         } catch(err) {
             console.log('getDataByIdFailed', err);
         }
+    }
+);
+
+export const fetchCardDataIfNeeded = cardId => (
+    (dispatch, getState) => {
+        const data = getState().getDataByIdReducer;
+
+        console.log('fetchCardDataIfNeeded', data);
     }
 );
