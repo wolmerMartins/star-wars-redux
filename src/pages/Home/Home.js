@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Cards from '../../components/Cards';
-//import Paginator from '../../components/Paginator';
+import Paginator from '../../components/Paginator';
 
 import './style.css';
 
 class Home extends Component {
+    renderPagination = () => {
+        const {
+            isLoading,
+            filteredBy,
+            response
+        } = this.props;
+
+        return !isLoading && response[filteredBy] && response[filteredBy].pages > 1;
+    }
+
     async componentDidMount() {
         await this.props.fetchData('people', 1);
     }
@@ -25,13 +35,10 @@ class Home extends Component {
                 response[filteredBy] &&
                     <div className="cards">
                         <Cards data={response[filteredBy][actualPage].data} />
-                    </div>
-            }
+                    </div>}
 
-            {/*!context.isLoading &&
-                context.data.count > 10 &&
-                <Paginator />
-            */}
+            {this.renderPagination() &&
+                <Paginator />}
             </main>
         )
     }

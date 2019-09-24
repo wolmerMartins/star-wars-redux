@@ -19,7 +19,7 @@ const getDataByPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredBy: action.filter,
-                actualPage: action.page,
+                actualPage: parseInt(action.page),
                 isLoading: true
             };
         case actionTypes.GET_DATA_BY_PAGE_SUCCEED:
@@ -28,6 +28,7 @@ const getDataByPageReducer = (state = initialState, action) => {
                 dataByFilter: {
                     [action.filter]: {
                         pages: setPages(action.total),
+                        ...state.dataByFilter[action.filter],
                         [action.page]: {
                             data: action.data,
                             nextPage: Utils.onlyNumbers(action.nextPage),

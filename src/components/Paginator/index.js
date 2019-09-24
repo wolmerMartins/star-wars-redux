@@ -1,20 +1,20 @@
-import React from 'react';
+import { connect } from 'react-redux';
+import Paginator from './Paginator';
 
-import Context from '../../context/Context';
+import { fetchDataIfNeeded } from '../../actions/getDataByPage';
 
-import './style.css';
+const mapStateToProps = ({ getDataByPageReducer }) => ({
+    actualPage: getDataByPageReducer.actualPage,
+    response: getDataByPageReducer.dataByFilter,
+    filteredBy: getDataByPageReducer.filteredBy,
+    isLoading: getDataByPageReducer.isLoading,
+});
 
-const Paginator = props => (
-    <Context.Consumer>
-    {context => (
-        <div className="paginator-container">
-            <nav>
-                <button className="change-page" onClick={() => context.getDataByPage(context.data.previous)} disabled={!context.data.previous}>Previous</button>
-                <button className="change-page" onClick={() => context.getDataByPage(context.data.next)} disabled={!context.data.next}>Next</button>
-            </nav>
-        </div>
-    )}
-    </Context.Consumer>
-);
+const mapDispatchToProps = dispatch => ({
+    fetchData: (filter, page) => dispatch(fetchDataIfNeeded(filter, page))
+});
 
-export default Paginator;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Paginator);
