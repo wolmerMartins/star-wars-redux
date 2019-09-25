@@ -6,7 +6,7 @@ import DetailsImage from '../DetailsImage';
 
 const PeopleDetails = props => (
     <div className="card-details-container">
-        <DetailsImage name={props.data.name} goBack={props.returnToHome} />
+        <DetailsImage name={props.data.name} goBack={props.goBackToPage} />
         
         <div className="card-infos">
             <div className="card-header">
@@ -50,7 +50,8 @@ PeopleDetails.propTypes = {
         films: PropTypes.array.isRequired,
         starships: PropTypes.array.isRequired,
         vehicles: PropTypes.array.isRequired
-    }).isRequired
+    }).isRequired,
+    goBackToPage: PropTypes.func.isRequired
 }
 
 export default PeopleDetails;

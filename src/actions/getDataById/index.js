@@ -17,6 +17,16 @@ export const getDataByIdFailed = error => ({
     error
 });
 
+export const getDataByIdLoaded = (filter, id) => ({
+    type: actionTypes.GET_DATA_BY_ID_LOADED,
+    filter,
+    id
+});
+
+export const goBackToPage = () => ({
+    type: actionTypes.GO_BACK_TO_PAGE
+});
+
 const addDataToCard = (cardAdd, card) => {
     for (let attr in card) {
         if (attr === 'homeworld') card.homeworld = cardAdd.find(res => (/planets/).test(res.url));
@@ -62,15 +72,22 @@ const getAdditionalDataToCard = cardId => (
 
             dispatch(getDataByIdSucceed(cardAdded, filteredBy));
         } catch(err) {
-            console.log('getDataByIdFailed', err);
+            dispatch(getDataByIdFailed(err));
         }
     }
 );
+
+const hasCardsDataInStore = (filter, id, store) => {
+    if (!filter) return false;
+    if (!store[filter][id]) return false;
+    return true;
+}
 
 export const fetchCardDataIfNeeded = cardId => (
     (dispatch, getState) => {
         const data = getState().getDataByIdReducer;
 
-        console.log('fetchCardDataIfNeeded', data);
+        if (!hasCardsDataInStore(data.filter, cardId, data.cardsData)) return dispatch(getAdditionalDataToCard(cardId));
+        return dispatch(getDataByIdLoaded(data.filter, cardId));
     }
 );

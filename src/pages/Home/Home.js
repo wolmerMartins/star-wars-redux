@@ -18,7 +18,12 @@ class Home extends Component {
     }
 
     async componentDidMount() {
-        await this.props.fetchData('people', 1);
+        const {
+            filteredBy,
+            actualPage
+        } = this.props;
+
+        await this.props.fetchData(filteredBy, actualPage);
     }
 
     render() {

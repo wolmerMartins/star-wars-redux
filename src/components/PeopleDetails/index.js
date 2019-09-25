@@ -1,10 +1,16 @@
 import { connect } from 'react-redux';
 import PeopleDetails from './PeopleDetails';
+import { goBackToPage } from '../../actions/getDataById';
 
 const mapStateToProps = ({ getDataByIdReducer }) => ({
     data: getDataByIdReducer.cardsData[getDataByIdReducer.filter][getDataByIdReducer.selectedCardId]
 });
 
+const mapDispatchToProps = dispatch => ({
+    goBackToPage: () => dispatch(goBackToPage())
+});
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(PeopleDetails);

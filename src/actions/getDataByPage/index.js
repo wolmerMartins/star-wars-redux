@@ -22,9 +22,11 @@ export const getDataByPageFailed = error => ({
     error
 });
 
-const setPages = total => {
-    return Math.ceil(total / 10);
-}
+export const getDataByPageLoaded = (filter, page) => ({
+    type: actionTypes.GET_DATA_BY_PAGE_LOADED,
+    filter,
+    page
+});
 
 const fetchData = (filter, page) => {
     return async dispatch => {
@@ -33,11 +35,6 @@ const fetchData = (filter, page) => {
         try {
             let response = await api.fetchBase.get(`${filter}/?page=${page}`);
             if (response.status === 200) {
-                console.log('response', response.data);
-                /*const data = {
-                    pages: setPages(response.data.count)
-                }
-                console.log('response data', data);*/
                 dispatch(getDataByPageSucceed(filter, page, response.data));
             } else {
                 console.log('getDataByPageError', response);
@@ -55,16 +52,9 @@ const hasDataInStore = (filter, page, state) => {
     return true;
 };
 
-export const fetchDataIfNeeded = (filter, page) => {
-    return (dispatch, getState) => {
-        const {
-            getDataByPageReducer
-        } = getState();
-        if (hasDataInStore(filter, page, getState())) {
-            dispatch(getDataByPageStarted(filter, page));
-            console.log('prev page', getDataByPageReducer.dataByFilter[filter][page]);
-            return dispatch(getDataByPageSucceed(filter, page, getDataByPageReducer.dataByFilter[filter][page]));
-        }
-        dispatch(fetchData(filter, page));
+export const fetchDataIfNeeded = (filter, page) => (
+    (dispatch, getState) => {
+        if (!hasDataInStore(filter, page, getState())) return dispatch(fetchData(filter, page));
+        return dispatch(getDataByPageLoaded(filter, page));
     }
-};
+);
