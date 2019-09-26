@@ -4,10 +4,10 @@ import Utils from '../utils/Utils';
 const initialState = {
     dataByFilter: {},
     actualPage: 1,
-    filteredBy: '',
+    filteredBy: 'people',
     isLoading: false,
     error: {}
-}
+};
 
 const setPages = total => {
     return Math.ceil(total / 10);
@@ -19,7 +19,7 @@ const getDataByPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredBy: action.filter,
-                actualPage: action.page,
+                actualPage: parseInt(action.page),
                 isLoading: true
             };
         case actionTypes.GET_DATA_BY_PAGE_SUCCEED:
@@ -28,6 +28,7 @@ const getDataByPageReducer = (state = initialState, action) => {
                 dataByFilter: {
                     [action.filter]: {
                         pages: setPages(action.total),
+                        ...state.dataByFilter[action.filter],
                         [action.page]: {
                             data: action.data,
                             nextPage: Utils.onlyNumbers(action.nextPage),
@@ -42,6 +43,12 @@ const getDataByPageReducer = (state = initialState, action) => {
                 ...state,
                 error: action.error,
                 isLoading: false
+            };
+        case actionTypes.GET_DATA_BY_PAGE_LOADED:
+            return {
+                ...state,
+                filteredBy: action.filter,
+                actualPage: parseInt(action.page)
             };
         default:
             return state;

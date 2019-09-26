@@ -22,6 +22,12 @@ export const getDataByPageFailed = error => ({
     error
 });
 
+export const getDataByPageLoaded = (filter, page) => ({
+    type: actionTypes.GET_DATA_BY_PAGE_LOADED,
+    filter,
+    page
+});
+
 const fetchData = (filter, page) => {
     return async dispatch => {
         dispatch(getDataByPageStarted(filter, page))
@@ -46,9 +52,9 @@ const hasDataInStore = (filter, page, state) => {
     return true;
 };
 
-export const fetchDataIfNeeded = (filter, page) => {
-    return (dispatch, getState) => {
-        if (hasDataInStore(filter, page, getState())) return Promise.resolve();
-        dispatch(fetchData(filter, page));
+export const fetchDataIfNeeded = (filter, page) => (
+    (dispatch, getState) => {
+        if (!hasDataInStore(filter, page, getState())) return dispatch(fetchData(filter, page));
+        return dispatch(getDataByPageLoaded(filter, page));
     }
-};
+);

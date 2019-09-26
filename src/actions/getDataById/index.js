@@ -5,8 +5,10 @@ export const getDataByIdStarted = () => ({
     type: actionTypes.GET_DATA_BY_ID_STARTED
 });
 
-export const getDataByIdSucceed = data => ({
+export const getDataByIdSucceed = (data, filter) => ({
     type: actionTypes.GET_DATA_BY_ID_SUCCEED,
+    id: data.url,
+    filter,
     data
 });
 
@@ -15,12 +17,23 @@ export const getDataByIdFailed = error => ({
     error
 });
 
+export const getDataByIdLoaded = (filter, id) => ({
+    type: actionTypes.GET_DATA_BY_ID_LOADED,
+    filter,
+    id
+});
+
+export const goBackToPage = () => ({
+    type: actionTypes.GO_BACK_TO_PAGE
+});
+
 const addDataToCard = (cardAdd, card) => {
     for (let attr in card) {
         if (attr === 'homeworld') card.homeworld = cardAdd.find(res => (/planets/).test(res.url));
         if (Array.isArray(card[attr])) card[attr] = cardAdd.filter(res => ~res.url.indexOf(attr));
     }
-    console.log('addDataToCard', card);
+
+    return card;
 }
 
 const fetchDataByUrl = card => {
@@ -42,7 +55,7 @@ const fetchDataByUrl = card => {
     ).then(resolve => cardRef);
 }
 
-export const getAdditionalDataToCard = cardId => (
+const getAdditionalDataToCard = cardId => (
     async (dispatch, getState) => {
         dispatch(getDataByIdStarted());
 
@@ -55,9 +68,26 @@ export const getAdditionalDataToCard = cardId => (
         
         try {
             const cardAdd = await fetchDataByUrl(card);
-            addDataToCard(cardAdd, card);
+            const cardAdded = addDataToCard(cardAdd, card);
+
+            dispatch(getDataByIdSucceed(cardAdded, filteredBy));
         } catch(err) {
-            console.log('getDataByIdFailed', err);
+            dispatch(getDataByIdFailed(err));
         }
+    }
+);
+
+const hasCardsDataInStore = (filter, id, store) => {
+    if (!filter) return false;
+    if (!store[filter][id]) return false;
+    return true;
+}
+
+export const fetchCardDataIfNeeded = cardId => (
+    (dispatch, getState) => {
+        const data = getState().getDataByIdReducer;
+
+        if (!hasCardsDataInStore(data.filter, cardId, data.cardsData)) return dispatch(getAdditionalDataToCard(cardId));
+        return dispatch(getDataByIdLoaded(data.filter, cardId));
     }
 );

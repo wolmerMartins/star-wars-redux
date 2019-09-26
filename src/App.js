@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Redirect } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ import Loader from './components/Loader';
 
 import './global.css';
 
-function App({ isLoading }) {
+function App({ isLoading, isSelectedCard }) {
   return (
     <Provider>
       <div className="App">
@@ -18,11 +19,9 @@ function App({ isLoading }) {
           <Header />
             <BrowserRouter>
               <Routes />
-              {isLoading &&
-                <Loader />
-              }
-              { /*!context.dataSelected.status &&*/ <Redirect to="/" /> }
-              {/* context.dataSelected.status && <Redirect to="/details" /> */}
+              {isLoading && <Loader /> }
+              { !isSelectedCard && <Redirect to="/" /> }
+              { isSelectedCard && <Redirect to="/details" /> }
             </BrowserRouter>
         </div>
       </div>
@@ -31,8 +30,14 @@ function App({ isLoading }) {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.getDataByPageReducer.isLoading
+  isLoading: state.getDataByPageReducer.isLoading || state.getDataByIdReducer.isLoading,
+  isSelectedCard: state.getDataByIdReducer.isSelectedCard
 });
+
+App.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isSelectedCard: PropTypes.bool.isRequired
+}
 
 export default connect(
   mapStateToProps

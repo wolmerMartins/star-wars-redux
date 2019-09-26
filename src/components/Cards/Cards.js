@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchCardDataIfNeeded } from '../../actions/getDataById';
 
 import images from '../../assets/images/images';
 
@@ -8,7 +9,7 @@ const Cards = props => (
     props.data.map(res =>
         <div key={res.url} className="card-container">
             <button onClick={
-                () => props.getAdditionalDataToCard(res.url)
+                () => props.dispatch(fetchCardDataIfNeeded(res.url))
             } className="card-selected">
                 Click for details
             </button>
