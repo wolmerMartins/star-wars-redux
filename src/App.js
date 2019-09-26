@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Redirect } from 'react-router-dom';
 
-import Provider from './context/Provider';
 import Routes from './routes';
 
 import Header from './components/Header';
@@ -13,7 +12,6 @@ import './global.css';
 
 function App({ isLoading, isSelectedCard }) {
   return (
-    <Provider>
       <div className="App">
         <div className="app-container">
           <Header />
@@ -25,7 +23,6 @@ function App({ isLoading, isSelectedCard }) {
             </BrowserRouter>
         </div>
       </div>
-    </Provider>
   );
 }
 

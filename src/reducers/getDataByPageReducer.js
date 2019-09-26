@@ -26,6 +26,7 @@ const getDataByPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataByFilter: {
+                    ...state.dataByFilter,
                     [action.filter]: {
                         pages: setPages(action.total),
                         ...state.dataByFilter[action.filter],
