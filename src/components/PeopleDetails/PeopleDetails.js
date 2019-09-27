@@ -47,9 +47,9 @@ PeopleDetails.propTypes = {
             })).isRequired,
         gender: PropTypes.string.isRequired,
         birth_year: PropTypes.string.isRequired,
-        films: PropTypes.array.isRequired,
-        starships: PropTypes.array.isRequired,
-        vehicles: PropTypes.array.isRequired
+        films: PropTypes.array,
+        starships: PropTypes.array,
+        vehicles: PropTypes.array
     }).isRequired,
     goBackToPage: PropTypes.func.isRequired
 }
