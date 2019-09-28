@@ -3,23 +3,15 @@ import PropTypes from 'prop-types';
 
 import CardList from '../CardList';
 import DetailsImage from '../DetailsImage';
+import CardDetailsHeader from '../CardDetailsHeader';
 
 const FilmDetails = props => (
     <div className="card-details-container">
         <DetailsImage name={props.cardData.title} goBack={props.goBackToPage} />
         
         <div className="card-infos">
-            <div className="card-header">
-                <span className="card-name-location">
-                    <h2>{props.cardData.title}</h2>
-                    <h3><img src="" alt="" />{props.cardData.director}</h3>
-                </span>
-
-                <span className="card-additional">
-                    <p>{props.cardData.producer}</p>
-                    <p>{props.cardData.release_date}</p>
-                </span>
-            </div>
+            <CardDetailsHeader cardData={props.cardData} subtitle={'director'}
+                additionalData={['producer', 'release_date']} />
 
             <div className="card-body">
                 {props.cardData.species.length > 0 &&
