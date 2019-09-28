@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { cardLists } from '../CardLists';
+
 import './style.css';
 
 const CardList = props => (
@@ -7,12 +9,12 @@ const CardList = props => (
         <div className="card-list-container">
             <h2>{props.title}</h2>
             <ul>
-                {props.data.map(dt =>
+            {props.data.map(dt =>
                 <li key={dt.name ? dt.name : dt.title}>{dt.name ? dt.name : dt.title}</li>
-                )}
+            )}
             </ul>
         </div>
     </article>
 );
 
-export default CardList;
+export default cardLists(CardList);

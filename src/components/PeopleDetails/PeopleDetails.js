@@ -5,28 +5,25 @@ import CardList from '../CardList';
 import DetailsImage from '../DetailsImage';
 import CardDetailsHeader from '../CardDetailsHeader';
 
+import { withLists } from '../WithLists';
+
 const PeopleDetails = props => (
     <div className="card-details-container">
-        <DetailsImage name={props.data.name} goBack={props.goBackToPage} />
+        <DetailsImage name={props.cardData.name} goBack={props.goBackToPage} />
         
         <div className="card-infos">
-            <CardDetailsHeader cardData={props.data} subtitle={'homeworld.name'}
+            <CardDetailsHeader cardData={props.cardData} subtitle={'homeworld.name'}
                 additionalData={['species[0].name', 'gender', 'birth_year']} />
 
             <div className="card-body">
-                {props.data.films.length > 0 &&
-                <CardList data={props.data.films} title={'Films'} />}
-                {props.data.starships.length > 0 &&
-                <CardList data={props.data.starships} title={'Starships'} />}
-                {props.data.vehicles.length > 0 &&
-                <CardList data={props.data.vehicles} title={'Vehicles'} />}
+                <CardList lists={props.lists} />        
             </div>
         </div>
     </div>
 );
 
 PeopleDetails.propTypes = {
-    data: PropTypes.shape({
+    cardData: PropTypes.shape({
         name: PropTypes.string.isRequired,
         homeworld: PropTypes.shape({
             name: PropTypes.string.isRequired
@@ -42,7 +39,8 @@ PeopleDetails.propTypes = {
         starships: PropTypes.array,
         vehicles: PropTypes.array
     }).isRequired,
+    lists: PropTypes.array.isRequired,
     goBackToPage: PropTypes.func.isRequired
 }
 
-export default PeopleDetails;
+export default withLists(PeopleDetails);

@@ -5,6 +5,8 @@ import CardList from '../CardList';
 import DetailsImage from '../DetailsImage';
 import CardDetailsHeader from '../CardDetailsHeader';
 
+import { withLists } from '../WithLists';
+
 const SpecieDetails = props => (
     <div className="card-details-container">
         <DetailsImage name={props.cardData.name} goBack={props.goBackToPage} />
@@ -14,10 +16,7 @@ const SpecieDetails = props => (
                 additionalData={['language', 'classification', 'designation']} />
 
             <div className="card-body">
-                {props.cardData.films.length > 0 &&
-                <CardList data={props.cardData.films} title={'Films'} />}
-                {props.cardData.people.length > 0 &&
-                <CardList data={props.cardData.people} title={'People'} />}
+                <CardList lists={props.lists} />
             </div>
         </div>
     </div>
@@ -35,7 +34,8 @@ SpecieDetails.propTypes = {
         films: PropTypes.array,
         people: PropTypes.array
     }).isRequired,
+    lists: PropTypes.array.isRequired,
     goBackToPage: PropTypes.func.isRequired
 };
 
-export default SpecieDetails;
+export default withLists(SpecieDetails);

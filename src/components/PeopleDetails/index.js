@@ -3,7 +3,7 @@ import PeopleDetails from './PeopleDetails';
 import { goBackToPage } from '../../actions/getDataById';
 
 const mapStateToProps = ({ getDataByIdReducer }) => ({
-    data: getDataByIdReducer.cardsData[getDataByIdReducer.filter][getDataByIdReducer.selectedCardId]
+    cardData: getDataByIdReducer.cardsData[getDataByIdReducer.filter][getDataByIdReducer.selectedCardId]
 });
 
 const mapDispatchToProps = dispatch => ({
