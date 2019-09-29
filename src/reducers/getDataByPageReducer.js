@@ -5,10 +5,7 @@ const initialState = {
     dataByFilter: {},
     actualPage: 1,
     filteredBy: 'people',
-    isLoading: false,
-    error: {
-        status: false
-    }
+    isLoading: false
 };
 
 const setPages = total => {
