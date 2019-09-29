@@ -1,0 +1,49 @@
+.message-container {
+    width: 8rem;
+    height: auto;
+    position: fixed;
+    top: 1.2rem;
+    right: -100%;
+    z-index: 10;
+    animation: show-message 4s linear forwards;
+    border: 1px solid white;
+}
+
+.message-container div {
+    padding: .312rem;
+}
+
+.message-container .message {
+    background: var(--message);
+}
+
+.message-container .message-success {
+    background: var(--message-success);
+}
+
+.message-container .message-warn {
+    background: var(--message-warn);
+}
+
+.message-container .message-error {
+    background: var(--message-error);
+}
+
+.message-container div p {
+    font-size: .555rem;
+}
+
+@keyframes show-message {
+    0% {
+        right: -100%;
+    }
+    10% {
+        right: .7rem;
+    }
+    90% {
+        right: .7rem;
+    }
+    100% {
+        right: -100%;
+    }
+}

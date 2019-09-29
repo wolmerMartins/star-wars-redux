@@ -1,5 +1,7 @@
 import api from '../../services';
 import * as actionTypes from './actionTypes';
+import { handleError } from '../handleError';
+import _ from 'lodash';
 
 export const getDataByPageStarted = (filter, page) => ({
     type: actionTypes.GET_DATA_BY_PAGE_STARTED,
@@ -17,11 +19,6 @@ export const getDataByPageSucceed = (filter, page, data) => ({
     page
 });
 
-export const getDataByPageFailed = error => ({
-    type: actionTypes.GET_DATA_BY_PAGE_FAILED,
-    error
-});
-
 export const getDataByPageLoaded = (filter, page) => ({
     type: actionTypes.GET_DATA_BY_PAGE_LOADED,
     filter,
@@ -37,10 +34,19 @@ const fetchData = (filter, page) => {
             if (response.status === 200) {
                 dispatch(getDataByPageSucceed(filter, page, response.data));
             } else {
-                console.log('getDataByPageError', response);
+                throw new Error();
             }
         } catch(err) {
-            dispatch(getDataByPageFailed(err));
+            const error = {
+                status: true,
+                type: 'error',
+                code: actionTypes.GET_DATA_BY_PAGE_FAILED,
+                message: `An error has occurred fetching
+                    page ${page} of ${_.capitalize(filter)}.
+                    Try refresh the page.`
+            };
+
+            dispatch(handleError(error));
         }
     }
 };

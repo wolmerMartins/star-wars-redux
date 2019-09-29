@@ -6,6 +6,13 @@
     box-sizing: border-box;
 }
 
+:root {
+    --message: #E1C767;
+    --message-success: #756013;
+    --message-warn: #E7531A;
+    --message-error: #710F17;
+}
+
 body {
     background: #000;
     background-image: url('./assets/images/background.png');

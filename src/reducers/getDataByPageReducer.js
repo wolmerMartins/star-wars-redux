@@ -6,7 +6,9 @@ const initialState = {
     actualPage: 1,
     filteredBy: 'people',
     isLoading: false,
-    error: {}
+    error: {
+        status: false
+    }
 };
 
 const setPages = total => {
@@ -42,7 +44,6 @@ const getDataByPageReducer = (state = initialState, action) => {
         case actionTypes.GET_DATA_BY_PAGE_FAILED:
             return {
                 ...state,
-                error: action.error,
                 isLoading: false
             };
         case actionTypes.GET_DATA_BY_PAGE_LOADED:

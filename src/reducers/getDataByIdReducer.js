@@ -4,8 +4,7 @@ const initialState = {
     isSelectedCard: false,
     selectedCardId: '',
     isLoading: false,
-    cardsData: {},
-    error: {}
+    cardsData: {}
 };
 
 const getDataByIdReducer = (state = initialState, action) => {
@@ -32,7 +31,7 @@ const getDataByIdReducer = (state = initialState, action) => {
         case actionTypes.GET_DATA_BY_ID_FAILED:
             return {
                 ...state,
-                error: action.error
+                isLoading: false
             }
         case actionTypes.GET_DATA_BY_ID_LOADED:
             return {
@@ -45,7 +44,8 @@ const getDataByIdReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isSelectedCard: false,
-                selectedCardId: ''
+                selectedCardId: '',
+                isLoading: false
             }
         default:
             return state;

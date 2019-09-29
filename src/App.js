@@ -7,17 +7,23 @@ import Routes from './routes';
 
 import Header from './components/Header';
 import Loader from './components/Loader';
+import Message from './components/Message';
 
 import './global.css';
 
-function App({ isLoading, isSelectedCard }) {
+function App({
+  isLoading,
+  isSelectedCard,
+  isError
+}) {
   return (
       <div className="App">
         <div className="app-container">
           <Header />
             <BrowserRouter>
               <Routes />
-              {isLoading && <Loader /> }
+              { isError && <Message /> }
+              { isLoading && <Loader /> }
               { !isSelectedCard && <Redirect to="/" /> }
               { isSelectedCard && <Redirect to="/details" /> }
             </BrowserRouter>
@@ -26,14 +32,20 @@ function App({ isLoading, isSelectedCard }) {
   );
 }
 
-const mapStateToProps = state => ({
-  isLoading: state.getDataByPageReducer.isLoading || state.getDataByIdReducer.isLoading,
-  isSelectedCard: state.getDataByIdReducer.isSelectedCard
+const mapStateToProps = ({
+  getDataByIdReducer,
+  getDataByPageReducer,
+  handleErrorReducer
+}) => ({
+  isLoading: getDataByPageReducer.isLoading || getDataByIdReducer.isLoading,
+  isSelectedCard: getDataByIdReducer.isSelectedCard,
+  isError: handleErrorReducer.status
 });
 
 App.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  isSelectedCard: PropTypes.bool.isRequired
+  isSelectedCard: PropTypes.bool.isRequired,
+  isError: PropTypes.bool.isRequired
 }
 
 export default connect(

@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import api from '../../services';
+import { handleError } from '../handleError';
 
 export const getDataByIdStarted = () => ({
     type: actionTypes.GET_DATA_BY_ID_STARTED
@@ -10,11 +11,6 @@ export const getDataByIdSucceed = (data, filter) => ({
     id: data.url,
     filter,
     data
-});
-
-export const getDataByIdFailed = error => ({
-    type: actionTypes.GET_DATA_BY_ID_FAILED,
-    error
 });
 
 export const getDataByIdLoaded = (filter, id) => ({
@@ -72,7 +68,19 @@ const getAdditionalDataToCard = cardId => (
 
             dispatch(getDataByIdSucceed(cardAdded, filteredBy));
         } catch(err) {
-            dispatch(getDataByIdFailed(err));
+            const error = {
+                status: true,
+                type: 'error',
+                code: actionTypes.GET_DATA_BY_ID_FAILED,
+                message: `Couldn't fetch
+                    ${card.name ? card.name : card.title}
+                    data right now. Please, try again later.`
+            };
+
+            dispatch(handleError(error));
+            setTimeout(
+                () => dispatch(goBackToPage()),
+            3800);
         }
     }
 );
