@@ -8,6 +8,10 @@ class Utils {
     static isEmptyJson = json => {
         return JSON.stringify(json) === '{}';
     }
+
+    static removeSpecialCharacters = value => {
+        return value.replace(/[^A-Za-z0-9]/g, '');
+    }
 }
 
 export default Utils;

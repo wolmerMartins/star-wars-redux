@@ -11,6 +11,16 @@ star-wars
 |   |-- index.html
 |   |-- manifest.json
 |-- src
+|   |-- actions
+|   |   |-- getDataById
+|   |   |   |-- actionTypes.js
+|   |   |   |-- index.js
+|   |   |-- getDataByPage
+|   |   |   |-- actionTypes.js
+|   |   |   |-- index.js
+|   |   |-- handleError
+|   |   |   |-- actionTypes.js
+|   |   |   |-- index.js
 |   |-- assets
 |   |   |-- images
 |   |   |   |-- background.png
@@ -18,45 +28,72 @@ star-wars
 |   |   |   |-- star-wars-logo.png
 |   |   |   |-- tie-defender.png
 |   |-- components
+|   |   |-- CardDetailsHeader
+|   |   |   |-- index.js
 |   |   |-- CardList
 |   |   |   |-- index.js
 |   |   |   |-- style.css
+|   |   |-- CardLists
+|   |   |   |-- index.js
 |   |   |-- Cards
+|   |   |   |-- Cards.js
 |   |   |   |-- index.js
 |   |   |   |-- style.css
 |   |   |-- DetailsImage
 |   |   |   |-- index.js
 |   |   |-- FilmDetails
+|   |   |   |-- FilmDetails.js
 |   |   |   |-- index.js
 |   |   |-- Header
+|   |   |   |-- Header.js
 |   |   |   |-- index.js
 |   |   |   |-- style.css
 |   |   |-- Loader
 |   |   |   |-- index.js
 |   |   |   |-- style.css
+|   |   |-- Message
+|   |   |   |-- index.js
+|   |   |   |-- Message.js
+|   |   |   |-- style.css
 |   |   |-- Paginator
 |   |   |   |-- index.js
+|   |   |   |-- Paginator.js
 |   |   |   |-- style.css
 |   |   |-- PeopleDetails
 |   |   |   |-- index.js
+|   |   |   |-- PeopleDetails.js
 |   |   |-- PlanetDetails
 |   |   |   |-- index.js
+|   |   |   |-- PlanetDetails.js
 |   |   |-- SpecieDetails
 |   |   |   |-- index.js
+|   |   |   |-- SpecieDetails.js
 |   |   |-- StarshipDetails
 |   |   |   |-- index.js
+|   |   |   |-- StarshipDetails.js
 |   |   |-- VehicleDetails
 |   |   |   |-- index.js
-|   |-- Context
-|   |   |-- Context.js
-|   |   |-- Provider.js
+|   |   |   |-- VehicleDetails.js
+|   |   |-- WithLists
+|   |   |   |-- index.js
 |   |-- Pages
 |   |   |-- Details
+|   |   |   |-- Details.js
 |   |   |   |-- index.js
 |   |   |   |-- style.css
 |   |   |-- Home
+|   |   |   |-- Home.js
 |   |   |   |-- index.js
 |   |   |   |-- style.css
+|   |-- Reducers
+|   |   |-- getDataByIdReducer.js
+|   |   |-- getDataByPageReducer.js
+|   |   |-- handleErrorReducer.js
+|   |   |-- index.js
+|   |-- Store
+|   |   |-- configureStore.js
+|   |-- utils
+|   |   |-- Utils.js
 |   |-- App.js
 |   |-- App.test.js
 |   |-- global.css
@@ -115,44 +152,3 @@ Para inicializar o projeto.
 {context.filteredBy === 'starships' && <StarshipsDetails />}
 {context.filteredBy === 'films' && <FilmDetails />}
 ```
-
-**_Context_**
-
-Para a integração do componentes foi utilizada a **_ContextAPI_** nativa do React.
-
-**_Context.js_** cria uma instância da **_ContextAPI_** para ser utilizada no projeto.
-
-**_Provider.js_** centraliza a *state tree* do projeto e todas as funçoes de manipulação da mesma, para serem utilizadas por todos os componentes.
-```
-state = {
-    isLoading: true,
-    filteredBy: '',
-    data: {},
-    dataSelected: {
-        status: false,
-        data: {}
-    }
-}
-```
-
-**_getDataByFilter(filter)_** busca os dados na API de acordo com o filtro selecionado.
-```
-<button onClick={() => context.getDataByFilter('people')}>People</button>
-```
-
-**_getDataById(cardId)_** busca os detalhes de um objeto pelo seu ID.
-```
-<button onClick={() => props.getDataById(res.url)}>Click for details</button>
-```
-
-**_getDataByPage(page)_** retorna os dados da API paginados.
-```
-<button onClick={() => context.getDataByPage(context.data.previous)}>Previous</button>
-```
-
-**_returnToHome()_** retorna para a página *Home* após exibir os detalhes de um cartão.
-```
-<button onClick={() => context.returnToHome()}>Go back</button>
-```
-
-**_getDataByUrl(card)_** busca todos os dados referenciados no objeto selecionado pelas suas URLs.
