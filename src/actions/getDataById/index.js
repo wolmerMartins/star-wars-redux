@@ -86,16 +86,19 @@ const getAdditionalDataToCard = cardId => (
 );
 
 const hasCardsDataInStore = (filter, id, store) => {
-    if (!filter) return false;
-    if (!store[filter][id]) return false;
-    return true;
+    if (store[filter]) {
+        if (store[filter][id]) return true;
+        return false;
+    }
+    return false;
 }
 
 export const fetchCardDataIfNeeded = cardId => (
     (dispatch, getState) => {
-        const data = getState().getDataByIdReducer;
-
-        if (!hasCardsDataInStore(data.filter, cardId, data.cardsData)) return dispatch(getAdditionalDataToCard(cardId));
-        return dispatch(getDataByIdLoaded(data.filter, cardId));
+        const byPage = getState().getDataByPageReducer;
+        const byId = getState().getDataByIdReducer;
+        
+        if (!hasCardsDataInStore(byPage.filteredBy, cardId, byId.cardsData)) return dispatch(getAdditionalDataToCard(cardId));
+        return dispatch(getDataByIdLoaded(byPage.filteredBy, cardId));
     }
 );

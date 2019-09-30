@@ -1,7 +1,6 @@
 import api from '../../services';
 import * as actionTypes from './actionTypes';
 import { handleError } from '../handleError';
-import { goBackToPage } from '../getDataById';
 import _ from 'lodash';
 
 export const getDataByPageStarted = (filter, page) => ({
@@ -61,7 +60,6 @@ const hasDataInStore = (filter, page, state) => {
 
 export const fetchDataIfNeeded = (filter, page) => (
     (dispatch, getState) => {
-        dispatch(goBackToPage());
         if (!hasDataInStore(filter, page, getState())) return dispatch(fetchData(filter, page));
         return dispatch(getDataByPageLoaded(filter, page));
     }

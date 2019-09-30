@@ -18,6 +18,7 @@ const getDataByIdReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cardsData: {
+                    ...state.cardsData,
                     [action.filter]: {
                         ...state.cardsData[action.filter],
                         [action.id]: action.data
